@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>organization</title>
+    <style>
+        .container{
+        text-align:center;
+        font-size:25px;
+        font-weight:20px;
+        box-shadow: 10px 10px;
+
+        }
+        .card{
+
+            background-color: #D3D3D3;
+            box-shadow: 10px 10px;
+            object-fit: cover;
+            margin: 10px ;
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    {% for p in orgn %}
+        <a href="{% url 'student:organ' %}">
+        <div class="card">
+
+            <h3>{{ p.name }}</h3>
+            <p class="address">address: {{ p.address }}</p>
+            <p>country: {{p.country}}</p>
+            <p>active: {{p.is_active}}</p>
+
+        </div>
+        </a>
+    {% endfor %}
+</div>
+
+
+</body>
+</html>
