@@ -1,9 +1,14 @@
 from django.db import models
 from student.models import Organization
+from django.conf import settings
 
 # Create your models here.
+
+
+
 class Subject(models.Model):
-    name = models.CharField(max_length=255)
+
+    subject_name = models.CharField(max_length=255)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
@@ -42,13 +47,57 @@ class Question(models.Model):
         ('D', 'Option D'),
     ])
     year = models.IntegerField(null=True)
-    answer = models.CharField(null=True)
-    explanation = models.CharField(null=True)
+    answer = models.CharField(max_length=255, default="Default Answer")
+    explanation = models.CharField(max_length=500, default="No explanation provided.")
     verified = models.BooleanField(null=False)
     organization_id =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.question_no
+        return str(self.question_no)
+
+
+
+
+
+
+class MockTest(models.Model):
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="mock_tests")
+    score = models.FloatField(default=0)
+    completed = models.BooleanField(default=False)
+    organization_id =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+    def __str__(self):
+        return f"Mock Test Attempt by {self.student.username} - Score: {self.score}"
+
+
+
+
+
+
+class MockTestSubmission(models.Model):
+    total_attended = models.IntegerField(max_length=200)
+    unattended = models.CharField()
+    test_average_time = models.TimeField()
+    score = models.FloatField(default=0)
+    completed = models.BooleanField(default=False)
+    question_average_time = models.TimeField()
+    completion_date = models.TimeField
+
+    def __str__(self):
+        return self.total_attended
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
