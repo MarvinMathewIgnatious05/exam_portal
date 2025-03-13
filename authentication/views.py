@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
@@ -13,10 +13,12 @@ def user_registration(request):
         username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
+        date_of_birth = request.POST.get('date_of_birth')
         phone = request.POST.get('phone_number')
         address = request.POST.get('address')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
+        organization = request.POST.get('organization')
         profile_picture = request.FILES.get('profile_picture')
 
         if password == confirm_password:
@@ -24,6 +26,7 @@ def user_registration(request):
                 messages.error(request, "Username already taken")
             elif User.objects.filter(email=email).exists():
                 messages.error(request, "Email already registered")
+
             else:
                 user = User.objects.create_user(
                     username=username,
@@ -32,6 +35,8 @@ def user_registration(request):
                     phone_number=phone,
                     address=address,
                     password=password,
+                    date_of_birth=date_of_birth,
+                    organization=organization,
                     profile_picture=profile_picture
                 )
                 user.save()
@@ -56,10 +61,10 @@ def user_login(request):
             return redirect("")
 
         else:
-            messages.error(request,"invalid username or password")
+            messages.error(request, "invalid username or password")
             print("invalid username or password")
 
-    return render(request,"user_login.html")
+    return render(request, "user_login.html")
 
 
 def user_logout(request):

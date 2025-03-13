@@ -1,0 +1,231 @@
+<!--<!DOCTYPE html>-->
+<!--{% load static %}-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>HOME</title>-->
+<!--<style>-->
+<!--body {-->
+<!--    font-family: Arial, sans-serif;-->
+<!--    background-image: url("{% static 'images/home_img.jpg' %}");-->
+<!--    background-size: cover;-->
+<!--    background-position: center;-->
+<!--    background-repeat: no-repeat;-->
+<!--    background-attachment: fixed;-->
+<!--    margin: 0;-->
+<!--    padding: 20px;-->
+<!--}-->
+
+<!--    }-->
+
+<!--    #navbar {-->
+<!--        position: sticky;-->
+<!--        top: 0;-->
+<!--        overflow: hidden;-->
+<!--        background-color: #333;-->
+<!--        z-index: 1000;-->
+<!--    }-->
+
+<!--    ul {-->
+<!--        list-style-type: none;-->
+<!--        margin: 0;-->
+<!--        padding: 0;-->
+<!--        overflow: hidden;-->
+<!--        background-color: #333;-->
+<!--        font-size: x-large;-->
+<!--    }-->
+
+<!--    li {-->
+<!--        float: left;-->
+<!--    }-->
+
+<!--    li a {-->
+<!--        display: block;-->
+<!--        color: white;-->
+<!--        text-align: center;-->
+<!--        padding: 14px 16px;-->
+<!--        text-decoration: none;-->
+<!--    }-->
+
+<!--    li a:hover:not(.active) {-->
+<!--        background-color: #04AA6D;-->
+<!--    }-->
+
+<!--    .active {-->
+<!--        background-color: #04AA6D;-->
+<!--    }-->
+
+<!--    </style>-->
+
+
+<!--<body>-->
+<!--<div id="navbar">-->
+
+<!--    <ul>-->
+
+
+
+
+<!--        <li  style="float:right"><a href="/" style="color:red" >logout</a></li>-->
+
+
+<!--        <li>  <a class="navbar-brand" href="/user_view">-->
+<!--            <img src="{% static 'images/image_user.png' %}" width="25" height="25" alt="">-->
+
+<!--            </a></li>-->
+
+
+<!--    </ul>-->
+<!--</div>-->
+
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/home_img.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            color: white; /* Adjust text color for better readability */
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            overflow: hidden;
+            background-color: #333;
+            z-index: 1000;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            font-size: x-large;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #04AA6D;
+        }
+
+        .active {
+            background-color: #04AA6D;
+        }
+
+        table {
+            width: 80%;
+            margin: 50px auto;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+
+        th, td {
+            border: 1px solid white;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        td a {
+            color: #04AA6D;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div id="navbar">
+    <ul>
+        <li style="float:right"><a href="/" style="color:red">Logout</a></li>
+        <li>
+            <a class="navbar-brand" href="/user_view">
+                <img src="{% static 'images/image_user.png' %}" width="25" height="25" alt="User">
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- Table for Exams -->
+<table>
+    <tr>
+        <th>Exam Type</th>
+        <th>Details</th>
+    </tr>
+    <tr>
+        <td>Mock Test</td>
+        <td><a href="/mock_tests">View Mock Tests</a></td>
+    </tr>
+    <tr>
+        <td>Academic Exams</td>
+        <td><a href="/academic_exams">View Academic Exams</a></td>
+    </tr>
+    <tr>
+        <td>Aptitude Exams</td>
+        <td><a href="/aptitude_exams">View Aptitude Exams</a></td>
+    </tr>
+</table>
+
+</body>
+</html>

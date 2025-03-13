@@ -15,6 +15,7 @@ class Organization(models.Model):
         return self.name
 
 class StudentProfile(models.Model):
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_profile', default=True)
     date_of_birth = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)

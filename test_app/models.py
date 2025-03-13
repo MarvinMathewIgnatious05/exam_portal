@@ -1,6 +1,9 @@
 from django.db import models
 from student.models import Organization
 from django.conf import settings
+from datetime import timedelta
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
@@ -50,7 +53,7 @@ class Question(models.Model):
     answer = models.CharField(max_length=255, default="Default Answer")
     explanation = models.CharField(max_length=500, default="No explanation provided.")
     verified = models.BooleanField(null=False)
-    organization_id =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    organization =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return str(self.question_no)
@@ -58,44 +61,42 @@ class Question(models.Model):
 
 
 
-
-
 class MockTest(models.Model):
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="mock_tests")
-    score = models.FloatField(default=0)
     completed = models.BooleanField(default=False)
-    organization_id =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
 
 
     def __str__(self):
-        return f"Mock Test Attempt by {self.student.username} - Score: {self.score}"
-
-
-
+        return f"Mock Test Attempt by {self.student.username}"
 
 
 
 class MockTestSubmission(models.Model):
-    total_attended = models.IntegerField(max_length=200)
-    unattended = models.CharField()
-    test_average_time = models.TimeField()
+
+    mock_test = models.ForeignKey(MockTest, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
+    total_attended = models.IntegerField(null=True)
+    unattended = models.IntegerField(default=0)
+    test_average_time = models.DurationField(null=True, blank=True)
+    question_average_time = models.DurationField(default=timedelta(seconds=60))
     score = models.FloatField(default=0)
     completed = models.BooleanField(default=False)
-    question_average_time = models.TimeField()
-    completion_date = models.TimeField
+    is_correct = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(null=True, blank=True, auto_now_add=True)
+    selected_option = models.CharField(
+        max_length=1,
+        choices=[('A', 'Option A'), ('B', 'Option B'), ('C', 'Option C'), ('D', 'Option D')],
+        null=True, blank=True  # ✅ Allows unanswered questions
+    )
+
+
+
+
 
     def __str__(self):
-        return self.total_attended
-
-
-
-
-
-
-
-
-
-
+        return self.mock_test
 
 
 

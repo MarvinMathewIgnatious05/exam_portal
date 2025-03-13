@@ -8,5 +8,6 @@ def organization_view(request):
     return render(request,"organization_view.html",{"orgn":orgns})
 
 
-
+def home_page(request):
+    return render(request,"home_page.html",)
 

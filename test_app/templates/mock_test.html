@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Mock Test</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="question">
+                    <p><strong>{{ question.question_no }}. {{ question.question_text }}</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="question_{{ question.id }}" value="A"> {{ question.option_a }}</label>
+                        <label><input type="radio" name="question_{{ question.id }}" value="B"> {{ question.option_b }}</label>
+                        <label><input type="radio" name="question_{{ question.id }}" value="C"> {{ question.option_c }}</label>
+                        <label><input type="radio" name="question_{{ question.id }}" value="D"> {{ question.option_d }}</label>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">Submit Test</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
