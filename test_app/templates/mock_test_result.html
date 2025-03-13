@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mock Test Results</title>
+</head>
+<body>
+    <h1>Mock Test Results</h1>
+    <p><strong>Score:</strong> {{ score }}%</p>
+    <h2>Answers</h2>
+    <ul>
+        {% for submission in submissions %}
+            <li>
+                <strong>Q:</strong> {{ submission.question.question_text }}<br>
+                <strong>Your Answer:</strong> {{ submission.selected_option }}<br>
+                <strong>Correct Answer:</strong> {{ submission.question.correct_option }}<br>
+                <strong>Correct:</strong> {{ submission.is_correct }}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'start_mock_test' %}">Take Another Test</a>
+</body>
+</html>
