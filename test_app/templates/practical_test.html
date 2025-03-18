@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Practical Test</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+          .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Practical Test - {{ practical_test.subject.subject_name }}</h1>
+        <p><strong>Student:</strong> {{ request.user.username }}</p>
+    <form method="post">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            <fieldset>
+                <legend>{{ question.question_no }}. {{ question.question_text }}</legend>
+                <label><input type="radio" name="question_{{ question.id }}" value="A"> {{ question.option_a }}</label><br>
+                <label><input type="radio" name="question_{{ question.id }}" value="B"> {{ question.option_b }}</label><br>
+                <label><input type="radio" name="question_{{ question.id }}" value="C"> {{ question.option_c }}</label><br>
+                <label><input type="radio" name="question_{{ question.id }}" value="D"> {{ question.option_d }}</label><br>
+            </fieldset>
+        {% endfor %}
+
+        <button class="submit-btn" type="submit">Submit Test</button>
+    </form>
+    </div>
+</body>
+</html>

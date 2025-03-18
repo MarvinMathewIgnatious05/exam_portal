@@ -88,15 +88,51 @@ class MockTestSubmission(models.Model):
     selected_option = models.CharField(
         max_length=1,
         choices=[('A', 'Option A'), ('B', 'Option B'), ('C', 'Option C'), ('D', 'Option D')],
-        null=True, blank=True  # ✅ Allows unanswered questions
+        null=True, blank=True
     )
 
 
+    def __str__(self):
+        return str(self.mock_test)
 
+
+
+
+class PracticalTest(models.Model):
+
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    completed = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):
-        return self.mock_test
+        return f" Practical Test Attempt by {self.student.username}"
+
+
+class PracticalTestSubmission(models.Model):
+    practical_test = models.ForeignKey(PracticalTest, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    answers = models.CharField()
+    score = models.FloatField(null=True, blank=True)
+    unattended = models.IntegerField(default=0)
+    total_attended = models.IntegerField(null=True)
+    test_average_time = models.DurationField(null=True, blank=True)
+    completed = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(null=True, blank=True, auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.practical_test
+
+
+
+
 
 
 
