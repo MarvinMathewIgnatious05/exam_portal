@@ -1,32 +1,20 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practical Test Result</title>
 </head>
 <body>
-    <h1>Practical Test Result - {{ submission.subject.subject_name }}</h1>
-
-
+    <h1>Test Result - {{ practical_test.subject.subject_name }}</h1>
+    <br>
     <p><strong>Student:</strong> {{ submission.student.username }}</p>
-    <p><strong>Score:</strong> {{ submission.score }}%</p>
-    <p><strong>Questions Attempted:</strong> {{ submission.total_attended }}</p>
-    <p><strong>Unattended Questions:</strong> {{ submission.unattended }}</p>
+    <br>
+    <p>Score: {{ submission.score }}%</p>
+    <p>Total Questions: {{ submission.total_attended }}</p>
+    <p>Questions Attempted: {{ submission.total_attended }}</p>
+    <p>Unattended Questions: {{ submission.unattended }}</p>
+    <br>
 
-<!--    <h2>Submitted Answers</h2>-->
-<!--    <ul>-->
-<!--        {% for question, answer in answers.Questions %}-->
-<!--            <li>-->
-<!--                <strong>Q{{ question.question_no }}:</strong>-->
-<!--                Your Answer: {{ answer }} | Correct Answer: {{ question.correct_option }}-->
-<!--            </li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-
-
-
-<!--    <a href="{% url 'practical_test' submission.subject.id %}">Take Test Again</a>-->
         <a href="/student/home">Back to Home</a>
 
 </body>
