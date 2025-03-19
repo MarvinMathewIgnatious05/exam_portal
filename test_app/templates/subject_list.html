@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Select Subject</title>
+    <style>
+        body {
+                      font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/sublist.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            color: white; /* Adjust text color for better readability */
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Select a Subject</h2>
+    <div class="container">
+
+    <ul>
+        {% for subject in subjects %}
+            <li>
+                <br>
+                <a href="{% url 'select_subject' subject.id %}" > {{ subject.subject_name }}</a>
+                <br>
+            </li>
+        {% endfor %}
+    </ul>
+        </div>
+</body>
+</html>

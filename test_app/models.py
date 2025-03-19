@@ -16,7 +16,7 @@ class Subject(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.subject_name
+        return f"Subject : {self.subject_name}"
 
 
 
@@ -29,7 +29,7 @@ class Chapter(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return f" chapter: {self.name} - {self.subject}"
 
 
 
@@ -56,7 +56,7 @@ class Question(models.Model):
     organization =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return str(self.question_no)
+        return str(f"Question no : {self.question_no} - chapter :{self.chapter}")
 
 
 
@@ -93,7 +93,7 @@ class MockTestSubmission(models.Model):
 
 
     def __str__(self):
-        return str(self.mock_test)
+        return (f"Mock Test Submmision by {self.student.username}")
 
 
 
@@ -128,7 +128,7 @@ class PracticalTestSubmission(models.Model):
 
 
     def __str__(self):
-        return self.practical_test
+        return (f"Practical Test Submmision by {self.student.username}")
 
 
 

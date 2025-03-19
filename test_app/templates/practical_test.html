@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Practical Test</title>
-    <style>
+    <title>Start Practical Test - {{ subject.subject_name }}</title>
+        <style>
          body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -35,24 +35,31 @@
     </style>
 </head>
 <body>
-    <div class="container">
-    <h1>Practical Test - {{ practical_test.subject.subject_name }}</h1>
-        <p><strong>Student:</strong> {{ request.user.username }}</p>
+<div class="container">
+    <h2>Practical Test for {{ chapter.name }} ({{ subject.subject_name }})</h2>
+    <p><strong>Student:</strong> {{ request.user.username }}</p>
     <form method="post">
         {% csrf_token %}
-
         {% for question in questions %}
-            <fieldset>
-                <legend>{{ question.question_no }}. {{ question.question_text }}</legend>
-                <label><input type="radio" name="question_{{ question.id }}" value="A"> {{ question.option_a }}</label><br>
-                <label><input type="radio" name="question_{{ question.id }}" value="B"> {{ question.option_b }}</label><br>
-                <label><input type="radio" name="question_{{ question.id }}" value="C"> {{ question.option_c }}</label><br>
-                <label><input type="radio" name="question_{{ question.id }}" value="D"> {{ question.option_d }}</label><br>
-            </fieldset>
+            <p><strong>Q{{ question.question_no }}: {{ question.question_text }}</strong></p>
+            <input type="radio" name="question_{{ question.id }}" value="A"> {{ question.option_a }}<br>
+            <input type="radio" name="question_{{ question.id }}" value="B"> {{ question.option_b }}<br>
+            <input type="radio" name="question_{{ question.id }}" value="C"> {{ question.option_c }}<br>
+            <input type="radio" name="question_{{ question.id }}" value="D"> {{ question.option_d }}<br>
         {% endfor %}
-
+        <br><br>
         <button class="submit-btn" type="submit">Submit Test</button>
+
+
+                  {% if messages %}
+            {% for message in messages %}
+
+                <div class="alert{{message.tags}}" style="color:red">
+                   <center>{{message}}</center>
+                </div>
+            {% endfor %}
+        {% endif %}
     </form>
-    </div>
+</div>
 </body>
 </html>
