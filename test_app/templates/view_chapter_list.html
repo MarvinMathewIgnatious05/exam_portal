@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>chapter list</h1>
+ {% for chp in chapter %}
+                <li value="{{ chp.id }}">{{ chp.name }} - {{chp.title}} - {{chp.subject.subject_name}}</li>
+            {% endfor %}
+
+
+</body>
+</html>

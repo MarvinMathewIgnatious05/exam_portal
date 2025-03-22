@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Add Subject</title>
+    <style>
+
+        body {
+                      font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/sublist.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            color: white; /* Adjust text color for better readability */
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+
+        }
+        label{
+        font-size:20px;
+        color:black;
+        }
+        h1{
+        color:white;
+        }
+        button:hover{
+        color:white;
+        background-color:blue;
+        font-size:15px;
+
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Add Subject</h1>
+    <div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <label>Subject Name:</label>
+        <input type="text" name="subject_name" required><br><br>
+
+        <label>Organization:</label>
+        <select name="organization_id" required>
+            {% for org in organizations %}
+                <option value="{{ org.id }}">{{ org.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Is Active:</label>
+        <input type="checkbox" name="is_active"><br><br>
+
+        <button type="submit">Save</button>
+    </form>
+    </div>
+</body>
+</html>
