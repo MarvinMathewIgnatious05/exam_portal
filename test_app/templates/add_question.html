@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Question</title>
+</head>
+<body>
+    <h2>Add Question</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Chapter:</label>
+        <select name="chapter_id" required>
+            {% for chapter in chapter %}
+                <option value="{{ chapter.id }}">{{ chapter.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Question Number:</label>
+        <input type="number" name="question_no" required><br><br>
+
+        <label>Question Text:</label>
+        <textarea name="question_text" required></textarea><br><br>
+
+        <label>Option A:</label>
+        <input type="text" name="option_a" required><br><br>
+
+        <label>Option B:</label>
+        <input type="text" name="option_b" required><br><br>
+
+        <label>Option C:</label>
+        <input type="text" name="option_c" required><br><br>
+
+        <label>Option D:</label>
+        <input type="text" name="option_d" required><br><br>
+
+        <label>Correct Option:</label>
+        <select name="correct_option" required>
+            <option value="A">Option A</option>
+            <option value="B">Option B</option>
+            <option value="C">Option C</option>
+            <option value="D">Option D</option>
+        </select><br><br>
+
+        <label>Year:</label>
+        <input type="number" name="year"><br><br>
+
+        <label>Answer:</label>
+        <input type="text" name="answer"><br><br>
+
+        <label>Explanation:</label>
+        <input type="text" name="explanation"><br><br>
+
+        <label>Verified:</label>
+        <input type="checkbox" name="verified"><br><br>
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
+
+
+
+

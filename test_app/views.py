@@ -105,17 +105,6 @@ def chapter_list(request, subject_id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 @login_required(login_url="/auth/login/")
 def start_practical_test(request, chapter_id):
 
@@ -168,6 +157,7 @@ def start_practical_test(request, chapter_id):
 
         practical_test.completed = True
         practical_test.save()
+        print("practicaltest",practical_test)
 
         messages.success(request, "Practical test submitted successfully.")
         return redirect("practical_test_result", test_id=practical_test.id)
@@ -195,3 +185,96 @@ def practical_test_result(request, test_id):
         "practical_test": practical_test,
         "submission": submission,
     })
+
+
+def view_test(request):
+    return render(request, "test.html")
+
+
+
+
+def add_subject(request):
+    if request.method == "POST":
+        subject_name = request.POST.get("subject_name")
+        organization_id = request.POST.get("organization_id")
+        is_active = request.POST.get("is_active") == "on"
+
+        organization = Organization.objects.get(id=organization_id)
+
+        subject = Subject(subject_name=subject_name, organization=organization, is_active=is_active)
+        subject.save()
+        print("//////////",subject)
+
+        return redirect("subject_list")
+
+    organizations = Organization.objects.all()
+    print("organization",organizations)
+    return render(request, "add_subject.html", {"organizations": organizations})
+
+
+def add_chapter(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        subject_id = request.POST.get("subject_id")
+        title = request.POST.get("title")
+        is_active = request.POST.get("is_active") == "on"
+
+        subject = Subject.objects.get(id=subject_id)
+        print("add_chapter_sub",subject)
+
+        chapter = Chapter(name=name,subject=subject,title=title,is_active=is_active)
+        print("////////////////",chapter)
+        chapter.save()
+        return redirect("view_chp")
+    subjects = Subject.objects.all()
+    return render(request,"add_chapter.html",{"subject":subjects})
+
+
+def view_chapter_list(request):
+    chapter = Chapter.objects.all()
+    return render(request,"view_chapter_list.html",{"chapter":chapter})
+
+
+
+def add_question(request):
+    if request.method == "POST":
+
+        chapter_id = request.POST.get("chapter_id")
+        question_no = request.POST.get("question_no")
+        question_text = request.POST.get("question_text")
+        option_a = request.POST.get("option_a")
+        option_b = request.POST.get("option_b")
+        option_c = request.POST.get("option_c")
+        option_d = request.POST.get("option_d")
+        correct_option = request.POST.get("correct_option")
+        year = request.POST.get("year")
+        answer = request.POST.get("answer")
+        explanation = request.POST.get("explanation")
+        verified = request.POST.get("verified") == "on"
+
+
+        chapter = Chapter.objects.get(id=chapter_id)
+
+        question = Question(
+            chapter=chapter,
+            question_no=question_no,
+            question_text=question_text,
+            option_a=option_a,
+            option_b=option_b,
+            option_c=option_c,
+            option_d=option_d,
+            correct_option=correct_option,
+            year=year,
+            answer=answer,
+            explanation=explanation,
+            verified=verified,
+
+
+        )
+        question.save()
+        print("///",question)
+        return redirect("view_question")
+
+    chapters = Chapter.objects.all()
+    return render(request, "add_question.html", {"chapter":chapters})
+
