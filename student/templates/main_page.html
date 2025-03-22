@@ -1,0 +1,186 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--{% load static %}-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>HOME</title>-->
+<!--    <style>-->
+<!--                body {-->
+
+<!--            background-image: url("{% static 'images/home2_img.jpg' %}");-->
+
+<!--        }-->
+<!--         #navbar {-->
+<!--            position: sticky;-->
+<!--            top: 0;-->
+<!--            overflow: hidden;-->
+<!--            background-color: #333;-->
+<!--            z-index: 1000;-->
+<!--        }-->
+
+<!--        ul {-->
+<!--            list-style-type: none;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            overflow: hidden;-->
+<!--            background-color: #333;-->
+<!--            font-size: x-large;-->
+<!--        }-->
+
+<!--        li {-->
+<!--            float: left;-->
+<!--        }-->
+
+<!--        li a {-->
+<!--            display: block;-->
+<!--            color: white;-->
+<!--            text-align: center;-->
+<!--            padding: 14px 16px;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+
+<!--        li a:hover:not(.active) {-->
+<!--            background-color: #04AA6D;-->
+<!--        }-->
+
+<!--        .active {-->
+<!--            background-color: #04AA6D;-->
+<!--        }-->
+<!--        button{-->
+<!--        test-align:center;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="navbar">-->
+<!--    <ul>-->
+<!--        <li style="float:right"><a href="/" style="color:red">Logout</a></li>-->
+<!--        <li>-->
+<!--            <a class="navbar-brand" href="/user_view">-->
+<!--                <img src="{% static 'images/image_user.png' %}" width="25" height="25" alt="User">-->
+<!--            </a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--   <button>GET STARTED</button>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("{% static 'images/home2_img.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Full screen height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        li {
+            display: inline;
+        }
+
+        li a {
+            color: white;
+            text-decoration: none;
+            font-size: x-large;
+            padding: 2px 16px;
+            display: inline-block;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #04AA6D;
+        }
+
+        .active {
+            background-color: #04AA6D;
+        }
+
+        .get-started-btn {
+            background-color:#B163FF;
+            color: white;
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .get-started-btn:hover {
+            background-color:#51158C;
+        }
+        h1{
+        background-color:;
+            color: white;
+
+        }
+    </style>
+</head>
+<body>
+
+<div id="navbar">
+    <ul>
+        <li>
+            <a class="navbar-brand" href="/user_view">
+                <img src="{% static 'images/image_user.png' %}" width="25" height="25" alt="User">
+            </a>
+        </li>
+        <li style="float:right"><a href="/" style="color:red">Logout</a></li>
+    </ul>
+</div>
+
+<h1> WELCOME   {{user}}</h1>
+<br><br>
+<a href="/student/home" class="get-started-btn">Get Started</a>
+
+</body>
+</html>

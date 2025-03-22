@@ -3,8 +3,24 @@
 <html>
 <head>
     <title>Practical Test Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
     <h1>Test Result - {{ practical_test.subject.subject_name }}</h1>
     <br>
     <p><strong>Student:</strong> {{ submission.student.username }}</p>
@@ -16,6 +32,7 @@
     <br>
 
         <a href="/student/home">Back to Home</a>
+    </div>
 
 </body>
 </html>

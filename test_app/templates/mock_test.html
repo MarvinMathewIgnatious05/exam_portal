@@ -53,6 +53,7 @@
 
     <div class="container">
         <h2>Mock Test</h2>
+        <p><strong>Student:</strong> {{ request.user.username }}</p>
 
         <form method="post">
             {% csrf_token %}

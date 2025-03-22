@@ -54,9 +54,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'exam_portal.urls'
+
 
 TEMPLATES = [
     {
@@ -146,3 +148,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
+

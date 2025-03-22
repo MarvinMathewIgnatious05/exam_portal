@@ -10,7 +10,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-image: url("{% static 'images/home_img.jpg' %}");
+            background-image: url("{% static 'images/sublist.jpg' %}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -64,7 +64,7 @@
             padding: 100px;
 
         }
-        .subjects, .mocktest {
+        .practical, .mocktest {
 
             text-align:center;
             margin: 10px;
@@ -79,10 +79,18 @@
             font-size:20px;
 
         }
-        .subjects a {
+        .practical a {
             text-decoration: none;
             color:black;
             font-size:20px;
+        }
+        .practical:hover{
+            background-color: grey;
+            font-size: 18px;
+        }
+        .mocktest:hover{
+            background-color: grey;
+            font-size: 28px;
         }
     </style>
 </head>
@@ -94,25 +102,22 @@
             <a class="navbar-brand" href="/user_view">
                 <img src="{% static 'images/image_user.png' %}" width="25" height="25" alt="User">
             </a>
+
         </li>
-        <li   class="active" style="float:left"><a href="/test/view_test" style="color:white">HOME</a></li>
-        <li style="float:right"><a href="/test/view_test" style="color:white">Test</a></li>
-        <li style="float:right"><a href="/test/view/chp" style="color:white">Chapter</a></li>
+        <li  class="active" style="float:right"><a href="/" style="color:white">Test</a></li>
          <li style="float:right"><a href="/test/subjects" style="color:white">Subject</a></li>
-        <li style="float:right"><a href="/test/view/qn" style="color:white">Question</a></li>
+        <li style="float:right"><a href="/" style="color:white">Chapter</a></li>
         <li style="float:right"><a href="/" style="color:white">Course</a></li>
     </ul>
 </div>
     <div class="container">
-        <div class="subjects">
-            <a href="/test/subjects">SUBJECTS</a>
+        <div class="mocktest">
+            <a href="/test/start">MOCK TEST</a>
         </div>
 
-      <div class="mocktest">
-    <a href="/test/start">MOCKTEST</a>
+      <div class="practical">
+    <a href="/test/subjects">PRACTICAL TEST</a>
 </div>
     </div>
 </body>
 </html>
-
-

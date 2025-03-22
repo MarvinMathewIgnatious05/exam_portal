@@ -21,6 +21,7 @@ def user_registration(request):
         organization = request.POST.get('organization')
         profile_picture = request.FILES.get('profile_picture')
 
+
         if password == confirm_password:
             if User.objects.filter(username=username).exists():
                 messages.error(request, "Username already taken")
@@ -58,7 +59,7 @@ def user_login(request):
         if user:
             login(request, user)
             messages.success(request,"successfully login")
-            return redirect("")
+            return redirect("/student/main")
 
         else:
             messages.error(request, "invalid username or password")

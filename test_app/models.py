@@ -51,12 +51,11 @@ class Question(models.Model):
     ])
     year = models.IntegerField(null=True)
     answer = models.CharField(max_length=255, default="Default Answer")
-    explanation = models.CharField(max_length=500, default="No explanation provided.")
+    explanation = models.CharField(max_length=225, default="No explanation provided.")
     verified = models.BooleanField(null=False)
     organization =models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
-
     def __str__(self):
-        return str(f"Question no : {self.question_no} - chapter :{self.chapter}")
+        return str(f"Question no : {self.question_no} -  :{self.chapter}")
 
 
 
