@@ -12,7 +12,7 @@ from django.contrib import messages
 
 
 def view_question(request):
-   qn = Question.objects.all().values()
+   qn = Question.objects.all().order_by("question_no")
    # print("qqqqqqqqqqqqqq",qn)
    return render(request,"view_question.html",{"qn":qn})
 
@@ -92,7 +92,7 @@ def subject_list(request):
 
 
 def select_subject(request, subject_id):
-    return redirect("chapter_list", subject_id=subject_id)
+    return redirect("test:chapter_list", subject_id=subject_id)
 
 
 def chapter_list(request, subject_id):
@@ -105,7 +105,7 @@ def chapter_list(request, subject_id):
 
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="authentication:user_login")
 def start_practical_test(request, chapter_id):
 
     chapter = get_object_or_404(Chapter, id=chapter_id, is_active=True)
@@ -171,7 +171,7 @@ def start_practical_test(request, chapter_id):
 
 
 
-@login_required
+@login_required(login_url="authentication:user_login")
 def practical_test_result(request, test_id):
 
     practical_test = get_object_or_404(PracticalTest, id=test_id, student=request.user)
@@ -186,13 +186,13 @@ def practical_test_result(request, test_id):
         "submission": submission,
     })
 
-
+@login_required(login_url="authentication:user_login")
 def view_test(request):
     return render(request, "test.html")
 
 
 
-
+@login_required(login_url="authentication:user_login")
 def add_subject(request):
     if request.method == "POST":
         subject_name = request.POST.get("subject_name")
@@ -211,7 +211,7 @@ def add_subject(request):
     print("organization",organizations)
     return render(request, "add_subject.html", {"organizations": organizations})
 
-
+@login_required(login_url="authentication:user_login")
 def add_chapter(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -229,13 +229,13 @@ def add_chapter(request):
     subjects = Subject.objects.all()
     return render(request,"add_chapter.html",{"subject":subjects})
 
-
+@login_required(login_url="authentication:user_login")
 def view_chapter_list(request):
     chapter = Chapter.objects.all()
     return render(request,"view_chapter_list.html",{"chapter":chapter})
 
 
-
+@login_required(login_url="authentication:user_login")
 def add_question(request):
     if request.method == "POST":
 
@@ -276,5 +276,9 @@ def add_question(request):
         return redirect("view_question")
 
     chapters = Chapter.objects.all()
-    return render(request, "add_question.html", {"chapter":chapters})
+    return render(request, "add_question.html", {"chapter": chapters})
 
+@login_required(login_url="authentication:user_login")
+def view_subject_list(request):
+    subject = Subject.objects.all()
+    return render(request, "view_subject_list.html", {"subject": subject})

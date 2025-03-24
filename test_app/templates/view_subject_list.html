@@ -3,9 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SUBJECT LIST</title>
     <style>
-          body {
+         body {
                       font-family: Arial, sans-serif;
             background-image: url("{% static 'images/sublist.jpg' %}");
             background-size: cover;
@@ -16,8 +16,7 @@
             padding: 20px;
             color: white; /* Adjust text color for better readability */
         }
-
-        #navbar {
+         #navbar {
             position: sticky;
             top: 0;
             overflow: hidden;
@@ -53,24 +52,25 @@
         .active {
             background-color: #04AA6D;
         }
-        .container {
-            max-width: 600px;
+          .container {
+            max-width: 400px;
             background: white;
-            padding: 50px;
+            padding: 40px;
             border-radius: 15px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             margin: auto;
+            color:black;
+            font-size:30px;
 
         }
-        .chapter {
+        .sub li{
         text-decoration: none;
         color:black;
-        text-transform: uppercase;
-        font-size:20px;
-        padding: 40px;
+        font-size:30px;
+        padding: 0px;
         }
-        .chapter:hover{
-         font-size: 28px;
+        .sub:hover{
+         font-size: 25px;
         color:#007bff;
         }
            button{
@@ -84,10 +84,10 @@
         background-color:blue;
         }
 
-
     </style>
 </head>
 <body>
+
 <div id="navbar">
     <ul>
         <li style="float:right"><a href="/" style="color:red">Logout</a></li>
@@ -97,20 +97,31 @@
             </a>
 
         </li>
-         <li style="float:left"><a href="/student/home" style="color:white">HOME</a></li>
-        <li class="active" style="float:right"><a href="/test/view/chp" style="color:white">Chapter</a></li>
+        <li    style="float:left"><a href="/student/home" style="color:white">HOME</a></li>
+         <li class="active" style="float:right"><a href="/test/subjects" style="color:white">Subject</a></li>
     </ul>
 </div>
-<h1>chapter list</h1>
+
+
+<h1>SUBJECT LIST</h1>
+<br><br>
 <div class="container">
- {% for chp in chapter %}
-                <li class="chapter" value="{{ chp.id }}">{{ chp.name }} - {{chp.title}} - {{chp.subject.subject_name}}</li>
+ {% for sub in subject %}
+    <br><br>
+                <li class="sub" value="{{ sub.id }}">{{ sub.subject_name }}</li>
+    <br><br>
             {% endfor %}
     <br><br>
-        <a href="{% url 'test:add_chp' %}">
-    <button>ADD CHAPTER</button>
+        <a href="{% url 'test:add_sub' %}">
+    <button>ADD SUBJECT</button>
 </a>
 </div>
 
+
 </body>
 </html>
+
+
+
+
+

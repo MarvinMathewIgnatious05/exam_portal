@@ -44,7 +44,7 @@
         {% for chapter in chapters %}
             <li>
                 <div class="chapters">
-                <a href="{% url 'practical_test' chapter.id %}">  {{  chapter.name }}</a>
+                <a href="{% url 'test:practical_test' chapter.id %}">  {{  chapter.name }}</a>
                     </div>
             </li>
 

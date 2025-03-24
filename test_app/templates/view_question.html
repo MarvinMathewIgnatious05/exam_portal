@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,32 +7,114 @@
     <title>View Questions</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+                   font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/sublist.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            color: white; /* Adjust text color for better readability */
+        }
+
+        #navbar {
+            position: sticky;
+            top: 0;
+            overflow: hidden;
+            background-color: #333;
+            z-index: 1000;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            font-size: x-large;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #04AA6D;
+        }
+
+        .active {
+            background-color: #04AA6D;
+        }
+           .container {
+            max-width: 600px;
+            background: white;
+            text-color:black;
+            padding: 90px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+
         }
         table {
-            width: 100%;
+            width: 50%;
             border-collapse: collapse;
             background: white;
+            color:black;
+            width:100%;
+
+
         }
         table, th, td {
             border: 1px solid black;
         }
         th, td {
-            padding: 10px;
+            padding: 20px;
             text-align: left;
         }
         th {
             background-color: #007bff;
             color: white;
         }
+             button{
+        color:white;
+        font-size:15px;
+        background-color: #007bff;
+        }
+
+        button:hover{
+        font-size: 20px;
+        background-color:green;
+        }
     </style>
 </head>
 <body>
+<div id="navbar">
+    <ul>
+        <li style="float:right"><a href="/" style="color:red">Logout</a></li>
+        <li>
+            <a class="navbar-brand" href="/user_view">
+                <img src="{% static 'images/image_user.png' %}" width="25" height="25" alt="User">
+            </a>
+
+        </li>
+
+        <li  style="float:left"><a href="/student/home" style="color:white">HOME</a></li>
+        <li class="active" style="float:right"><a href="/test/view/qn" style="color:white">Question</a></li>
+
+    </ul>
+</div>
 
     <h2>Question List</h2>
+    <div class="container">
 
     <table>
         <thead>
@@ -68,7 +151,15 @@
             </tr>
             {% endfor %}
         </tbody>
+        <br><br>
+
     </table>
+    <br><br>
+                        <a href="{% url 'test:add_qn' %}">
+    <button>ADD QUESTION</button>
+</a>
+        </div>
+
 
 </body>
 </html>

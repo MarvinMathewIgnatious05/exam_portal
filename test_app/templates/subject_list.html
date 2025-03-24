@@ -35,6 +35,16 @@
         color:red;
 
         }
+        button{
+        color:white;
+        font-size:15px;
+        background-color:green;
+        }
+
+        button:hover{
+        font-size: 20px;
+        background-color:blue;
+        }
     </style>
 </head>
 <body>
@@ -46,12 +56,20 @@
             <li>
                 <br>
                 <div class="subjects">
-                <a href="{% url 'select_subject' subject.id %}" > {{ subject.subject_name }}</a>
+                <a href="{% url 'test:select_subject' subject.id %}" > {{ subject.subject_name }}</a>
                     </div>
                 <br>
             </li>
         {% endfor %}
+        <br><br>
     </ul>
+
+        <a href="{% url 'test:add_sub' %}">
+    <button>ADD SUBJECT</button>
+</a>
+
+
         </div>
+
 </body>
 </html>

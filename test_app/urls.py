@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (view_question, start_mock_test, mock_test_result, start_practical_test, practical_test_result,
                     subject_list, select_subject, chapter_list, view_test, add_subject, add_chapter, view_chapter_list,
-                    add_question)
-
+                    add_question, view_subject_list)
+app_name = "test"
 urlpatterns = [
 
     path('view/qn/',view_question, name="view_question"),
@@ -18,6 +18,7 @@ urlpatterns = [
     path("add/chp/", add_chapter, name="add_chp"),
     path("view/chp/", view_chapter_list, name="view_chp"),
     path("add/qn/", add_question, name="add_qn"),
+    path("view/sub/", view_subject_list, name="view_sub"),
 
 ]
 

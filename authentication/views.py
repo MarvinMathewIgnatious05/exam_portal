@@ -2,12 +2,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 User = get_user_model()
 
 # User Registration View
+@login_required(login_url="authentication:user_login")
 def user_registration(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -48,7 +50,7 @@ def user_registration(request):
 
     return render(request, "user_registration.html")
 
-
+@login_required(login_url="authentication:user_login")
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
@@ -67,7 +69,7 @@ def user_login(request):
 
     return render(request, "user_login.html")
 
-
+@login_required(login_url="authentication:user_login")
 def user_logout(request):
     logout(request)
     # print("successfully logout")
