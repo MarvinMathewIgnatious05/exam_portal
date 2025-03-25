@@ -14,6 +14,8 @@ class Organization(models.Model):
     def __str__(self):
         return f"organization: {self.name}"
 
+
+
 class StudentProfile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_profile', default=True)
@@ -23,3 +25,18 @@ class StudentProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+
+class Course(models.Model):
+
+    course_name = models.CharField(max_length=225)
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    description = models.CharField(max_length=225)
+    is_active = models.BooleanField(default=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.course_name
+
