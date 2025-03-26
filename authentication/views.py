@@ -3,13 +3,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import CustomUser
 
 # Create your views here.
 
 User = get_user_model()
 
 # User Registration View
-@login_required(login_url="authentication:user_login")
+@login_required
 def user_registration(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -50,7 +51,7 @@ def user_registration(request):
 
     return render(request, "user_registration.html")
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
@@ -75,3 +76,44 @@ def user_logout(request):
     # print("successfully logout")
 
 
+def user_profile_view(request):
+    user = request.user
+    return render(request, "view_user_profile.html", {"user_view":user})
+
+
+
+
+
+@login_required
+def user_profile_edit(request):
+    user = request.user
+    ORGANIZATION_CHOICES = CustomUser.ORGANIZATION_CHOICES
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        email = request.POST.get('email')
+        date_of_birth = request.POST.get('date_of_birth')
+        phone = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        organization = request.POST.get('organization')
+        profile_picture = request.FILES.get('profile_picture')
+
+
+        user.username = username
+        user.first_name = first_name
+        user.email = email
+        user.date_of_birth = date_of_birth
+        user.phone_number = phone
+        user.address = address
+        user.organization = organization
+
+        if profile_picture:
+            user.profile_picture = profile_picture
+
+        user.save()
+
+        messages.success(request, "Profile updated successfully!")
+        return redirect("test:view_user_profile")
+
+    return render(request, "user_profile_edit.html", {"edit_user": user, "organization_choices": ORGANIZATION_CHOICES})
