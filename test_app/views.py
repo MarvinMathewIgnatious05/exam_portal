@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect,  get_object_or_404, HttpResponse
-from test_app.models import Subject, Chapter, Question, MockTest, MockTestSubmission, PracticalTest, PracticalTestSubmission
+from test_app.models import (Subject, Chapter, Question, MockTest, MockTestSubmission, PracticalTest,
+                             PracticalTestSubmission, CustomTest, CustomTestSubmission)
 from django.contrib.auth.decorators import login_required
 from .forms import MockTestSubmissionForm
 from django.utils.timezone import now
 from datetime import timedelta
 from student.models import Organization
 from django.contrib import messages
+
+
 
 
 
@@ -19,7 +22,7 @@ def view_question(request):
 
 
 
-@login_required(login_url="/auth/login/")
+@login_required
 def start_mock_test(request):
     if request.user.is_anonymous:
         messages.error(request, "You must be logged in to start the test.")
@@ -52,7 +55,7 @@ def start_mock_test(request):
         mock_test.completed = True
         mock_test.save()
         print("/////////",mock_test)
-        return redirect("mock_test_result", test_id=mock_test.id)
+        return redirect("test:mock_test_result", test_id=mock_test.id)
 
     return render(request, "mock_test.html", {"questions": questions})
 
@@ -105,7 +108,7 @@ def chapter_list(request, subject_id):
 
 
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def start_practical_test(request, chapter_id):
 
     chapter = get_object_or_404(Chapter, id=chapter_id, is_active=True)
@@ -160,7 +163,7 @@ def start_practical_test(request, chapter_id):
         print("practicaltest",practical_test)
 
         messages.success(request, "Practical test submitted successfully.")
-        return redirect("practical_test_result", test_id=practical_test.id)
+        return redirect("test:practical_test_result", test_id=practical_test.id)
 
     return render(request, "practical_test.html", {
         "practical_test": practical_test,
@@ -171,28 +174,28 @@ def start_practical_test(request, chapter_id):
 
 
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def practical_test_result(request, test_id):
 
     practical_test = get_object_or_404(PracticalTest, id=test_id, student=request.user)
     submission = PracticalTestSubmission.objects.filter(practical_test=practical_test).first()
 
-    # if not submission:
-    #     messages.error(request, "No submission found for this test.")
-    #     return redirect("subject_list")
+    if not submission:
+        messages.error(request, "No submission found for this test.")
+        return redirect("subject_list")
 
     return render(request, "pratical_test_result.html", {
         "practical_test": practical_test,
         "submission": submission,
     })
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def view_test(request):
     return render(request, "test.html")
 
 
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def add_subject(request):
     if request.method == "POST":
         subject_name = request.POST.get("subject_name")
@@ -205,13 +208,13 @@ def add_subject(request):
         subject.save()
         print("//////////",subject)
 
-        return redirect("subject_list")
+        return redirect("test:subject_list")
 
     organizations = Organization.objects.all()
     print("organization",organizations)
     return render(request, "add_subject.html", {"organizations": organizations})
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def add_chapter(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -225,17 +228,17 @@ def add_chapter(request):
         chapter = Chapter(name=name,subject=subject,title=title,is_active=is_active)
         print("////////////////",chapter)
         chapter.save()
-        return redirect("view_chp")
+        return redirect("test:view_chp")
     subjects = Subject.objects.all()
     return render(request,"add_chapter.html",{"subject":subjects})
 
-@login_required(login_url="authentication:user_login")
+
 def view_chapter_list(request):
     chapter = Chapter.objects.all()
     return render(request,"view_chapter_list.html",{"chapter":chapter})
 
 
-@login_required(login_url="authentication:user_login")
+@login_required
 def add_question(request):
     if request.method == "POST":
 
@@ -273,12 +276,96 @@ def add_question(request):
         )
         question.save()
         print("///",question)
-        return redirect("view_question")
+        return redirect("test:view_question")
 
     chapters = Chapter.objects.all()
     return render(request, "add_question.html", {"chapter": chapters})
 
-@login_required(login_url="authentication:user_login")
+
 def view_subject_list(request):
     subject = Subject.objects.all()
     return render(request, "view_subject_list.html", {"subject": subject})
+
+
+def exit_test(request):
+    if request.method == "POST":
+        choice = request.POST.get("choice")
+        if choice == "yes":
+            return redirect("/student/home")
+        elif choice == "no":
+            return redirect("/")
+    return render(request, "view_exit.html")
+
+
+#
+#
+
+
+
+@login_required
+def start_custom_test(request):
+    subjects = Subject.objects.filter(is_active=True)
+
+    if request.method == "POST":
+        selected_subject_ids = request.POST.getlist('subjects')
+        if not selected_subject_ids:
+            return render(request, 'start_custom_test.html', {'subjects': subjects, 'error': 'Please select at least one subject.'})
+
+        # Create a CustomTest for the student
+        custom_test = CustomTest.objects.create(student=request.user)
+        custom_test.subjects.add(*selected_subject_ids)
+
+        # Get related questions
+        questions = Question.objects.filter(chapter__subject__id__in=selected_subject_ids)
+
+        # Store test session
+        request.session['test_id'] = custom_test.id
+
+        return render(request, 'custom_test.html', {'questions': questions, 'custom_test': custom_test})
+
+    return render(request, 'start_custom_test.html', {'subjects': subjects})
+
+
+
+
+@login_required
+def submit_custom_test(request, test_id):
+    test_id = test_id or request.session.get('test_id')  # Use URL param or session
+    if not test_id:
+        return redirect('test:start_custom_test')
+
+    custom_test = get_object_or_404(CustomTest, id=test_id)
+    total_questions = 0
+    correct_answers = 0
+
+    if request.method == "POST":
+        for key, value in request.POST.items():
+            if key.startswith('question_'):
+                question_id = key.split('_')[1]
+                question = get_object_or_404(Question, id=question_id)
+                total_questions += 1
+
+                is_correct = question.correct_option == value
+                if is_correct:
+                    correct_answers += 1
+
+        score = round((correct_answers / total_questions) * 100, 2) if total_questions > 0 else 0
+
+        # Ensure organization is correctly assigned
+        organization = getattr(request.user, 'organization', None)
+        if not isinstance(organization, Organization):
+            organization = None
+
+        submission = CustomTestSubmission.objects.create(
+            custom_test=custom_test,
+            student=request.user,
+            organization=organization,
+            score=score,
+            total_attended=total_questions,
+            completed=True,
+            submitted_at=now()
+        )
+
+        return render(request, 'custom_test_result.html', {'submission': submission, 'correct_answers': correct_answers, 'total_questions': total_questions})
+
+    return redirect('test:start_custom_test')
