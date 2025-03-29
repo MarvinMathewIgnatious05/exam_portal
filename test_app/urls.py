@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (view_question, start_mock_test, mock_test_result, start_practical_test, practical_test_result,
                     subject_list, select_subject, chapter_list, view_test, add_subject, add_chapter, view_chapter_list,
-                    add_question, view_subject_list)
+                    add_question, view_subject_list, exit_test, start_custom_test, submit_custom_test)
 app_name = "test"
 urlpatterns = [
 
@@ -19,9 +19,11 @@ urlpatterns = [
     path("view/chp/", view_chapter_list, name="view_chp"),
     path("add/qn/", add_question, name="add_qn"),
     path("view/sub/", view_subject_list, name="view_sub"),
+    path('start-test/', start_custom_test, name='start_custom_test'),
+    path('submit-test/<int:test_id>/', submit_custom_test, name='submit_custom_test'),
+
 
 ]
-
 
 
 

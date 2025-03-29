@@ -129,8 +129,35 @@ class PracticalTestSubmission(models.Model):
     def __str__(self):
         return (f"Practical Test Submmision by {self.student.username}")
 
+class CustomTest(models.Model):
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    subjects = models.ManyToManyField(Subject, related_name="custom_tests")
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f" Custom Test Submitted by: {self.student.username}"
 
 
+class CustomTestSubmission(models.Model):
+
+    custom_test = models.ForeignKey(CustomTest, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, blank=True)
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    answer = models.CharField()
+    score = models.FloatField(null=True, blank=True)
+    completed = models.BooleanField(default=False)
+    total_attended = models.IntegerField(null=True)
+    test_average_time = models.DurationField(null=True, blank=True)
+    submitted_at = models.DateTimeField(null=True, blank=True, auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.custom_test
 
 
 
